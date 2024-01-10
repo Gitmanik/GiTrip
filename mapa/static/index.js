@@ -4,7 +4,7 @@ function sendRequest() {
     $.ajax({
         type: 'POST',
         url: '/nasze-api',
-        data: { input: inputValue },
+        data: { input: inputValue, lat: map.getCenter().lat(), lng: map.getCenter().lng() },
         success: function(response) {
             console.log(response);
         },
@@ -20,23 +20,12 @@ function sendRequestM() {
     $.ajax({
         type: 'POST',
         url: '/nasze-api',
-        data: { input: inputValue },
+        data: { input: inputValue, lat: map.getCenter().lat(), lng: map.getCenter().lng() },
         success: function(response) {
             console.log(response);
         },
         error: function(error) {
             console.error('Error', error);
         }
-    });
-}
-
-google.maps.event.addListener(map, 'click', function(event) {
-    placeMarker(event.latLng);
-});
-
-function placeMarker(location) {
-    var marker = new google.maps.Marker({
-        position: location,
-        map: map
     });
 }
