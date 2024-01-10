@@ -53,6 +53,7 @@ class MevoProvider:
 
             stations_x = entry['lat']
             stations_y = entry['lon']
+            # TODO: TUTAJ GOOGLE MAPS DISTANCE MATRIX
             distance = self.distance_calculate(user_position_x, user_position_y, stations_x, stations_y)
             if distance < current_lowest_distance:
                 current_lowest_distance = distance
@@ -73,6 +74,7 @@ class MevoProvider:
             free_bike_id = entry['bike_id']
             free_bike_x = entry['lat']
             free_bike_y = entry['lon']
+            # TODO: TUTAJ GOOGLE MAPS DISTANCE MATRIX
             distance = self.distance_calculate(user_position_x, user_position_y, free_bike_x, free_bike_y)
             if entry['vehicle_type_id'] == 'ebike':
                 if distance < current_lowest_distance_ebike:
