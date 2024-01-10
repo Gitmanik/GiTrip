@@ -35,6 +35,10 @@ def get_all_bikes():
 def tier_test():
     return tier.get_scooters_data(54.372158, 18.638306, 1000)
 
+@app.route("/tierzones")
+def tier_zones():
+    return tier.get_zones()
+
 @app.route("/routetest")
 def route_test():
     return gmaps.get_bike_distance(["Gdańsk, Bzowa 1"], ["Gdańsk, Obrońców Wybrzeża 10A", (10, 10)])

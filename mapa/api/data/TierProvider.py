@@ -4,12 +4,12 @@ import requests
 class TierProvider:
 
     def __init__(self):
+        self.apikey = {'x-api-key': 'bpEUTJEBTf74oGRWxaIcW7aeZMzDDODe1yBoSxi2'}
         pass
 
     # radius w metrach?
     def get_scooters_data(self, lat, lng, radius):
-        api = {'x-api-key': 'bpEUTJEBTf74oGRWxaIcW7aeZMzDDODe1yBoSxi2'}
-        r = requests.get(f"https://platform.tier-services.io/v1/vehicle?lat={lat}&lng={lng}&radius={radius}", headers = api)
+        r = requests.get(f"https://platform.tier-services.io/v1/vehicle?lat={lat}&lng={lng}&radius={radius}", headers = self.apikey)
 
         all_scooters = r.json()
 
@@ -28,4 +28,9 @@ class TierProvider:
 
         return to_ret
 
+    def get_zones(self):
+        r = requests.get(f"https://platform.tier-services.io/v1/zone/GDANSK/subzone", headers = self.apikey)
+
+        all_zones = r.json()
+        return all_zones
     
