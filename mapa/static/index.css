@@ -5,29 +5,32 @@ margin:0;
 padding:0;
 }
 
-
-input {
+.pytanie {
 padding:4%;
-font-size: 250%;
-width: 90%;
-height: 80%;
+font-size: 6vh;
+width: 80%;
+height: 35%;
 text-align: center;
 border-radius:15px;
+border-color: #C8E8ED;
+border-width:10px;
 }
 
 #wyszuk {
-z-index:99;
 position: absolute;
-height: 96%;
+z-index:1;
+height: 90%;
 margin-left: 2%;
 margin-top: 2%;
 width: 30%;
+background-color: #DED473;
+border-radius: 15px;
 }
 
 #poczatek {
 height: 15%;
 text-align: center;
-padding: 1%;
+padding-top: 5%;
 }
 
 #cel {
@@ -36,6 +39,36 @@ text-align: center;
 height: 15%;
 <!--padding: 0.5%;-->
 }
+
+#trasa {
+text-align: center;
+}
+
+.rodzajtrasy {
+margin-top:3%;
+align: center;
+}
+
+.wybor{
+font-size: 3vh;
+float:left;
+align: center;
+padding: 2% 5% 0 5%;
+}
+.trasa1, .trasa2 {
+float: left;
+text_align: center;
+width: 30%;
+font-size: 4vh;
+padding-top:10%;
+padding-bottom: 10%;
+border-radius:20px;
+}
+.trasa1 {
+margin-left: 7.5%;
+}
+
+
 
 @media only screen and (max-width: 900px) {
    nav {width:95%; position:relative; height:auto; font-size: 98%}

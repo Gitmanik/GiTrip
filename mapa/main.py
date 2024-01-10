@@ -1,8 +1,11 @@
 
 from flask import Flask, render_template, request, jsonify
 import api.maps.GoogleMapsProvider
+import api.data.TierProvider
 
 gmaps = api.maps.GoogleMapsProvider.GoogleMapsProvider('AIzaSyDsP9RqZORUaJlsX3f1zGJqDJccBNXez4o')
+
+tier = api.data.TierProvider.TierProvider()
 
 app = Flask(__name__)
 
@@ -21,3 +24,6 @@ def nasze_api():
         error_message = f'Error processing request: {str(e)}'
         return jsonify({'error': error_message}), 500
 
+@app.route("/tiertest")
+def tier_test():
+    return tier.get_scooters_data(54.372158, 18.638306, 1000)
