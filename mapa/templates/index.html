@@ -11,16 +11,19 @@
 <body>
 	<div id="container">
 		<div id="wyszuk">
-		<div id="poczatek">
-			<form>
-				<input name="start" class="pytanie" placeholder="Skąd przybywasz?">
-			</form>
-		</div>
-		<div id="cel">
-			<form>
-				<input name="meta" class="pytanie" placeholder="Dokąd zmierzasz?">
-			</form>
-		</div>
+			<div id="poczatek">
+					<input name="start" class="pytanie" placeholder="Skąd przybywasz?">
+			</div>
+			<div id="cel">
+					<input name="meta" class="pytanie" placeholder="Dokąd zmierzasz?">
+			</div>
+			<div id="trasa">
+				<form class="rodzajtrasy">
+				<input class="trasa1" type="submit" name="opcja_trasy" value="szybsza">
+					<p class="wybor">Wybierz</br>trasę</p>
+				<input class="trasa2" type="submit" name="opcja_trasy" value="tańsza">
+				</form>
+			</div>
 		</div>
 		<div id="map"></div>
 	</div>
