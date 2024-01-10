@@ -10,7 +10,7 @@ async function initMap(coords)
     return map;
 }
 
-var gdanskCoords = {lat: 54.37, lng: 18.63 }
+var gdanskCoords = {lat: 54.354687, lng: 18.593562 }
 
 window.addEventListener('load', async function()
 {
