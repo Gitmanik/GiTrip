@@ -1,27 +1,37 @@
-import json
 import math
+import requests
+import time
 
-user_position_x = 1
-user_position_y = 2
 
-class Mevo:
+class MevoProvider:
+
     def __init__(self):
-        mevo_stations_information_filename = 'station_information.json'
-        f = open(mevo_stations_information_filename)
-        self.stations_information_data = json.load(f)
+        self.last_updated = None
+        self.free_bike_data = None
+        self.stations_status_data = None
+        self.stations_information_data = None
+        self.update_data()
 
-        mevo_stations_status_filename = 'station_status.json'
-        f = open(mevo_stations_status_filename)
-        self.stations_status_data = json.load(f)
+    def update_if_needed(self):
+        if time.time() - self.last_updated > 30:
+            self.update_data()
 
-        mevo_free_bike_filename = 'free_bike_status.json'
-        f = open(mevo_free_bike_filename)
-        self.free_bike_data = json.load(f)
+    def update_data(self):
+        self.stations_information_data = self.get_json_data('station_information')
+        self.stations_status_data = self.get_json_data('station_status')
+        self.free_bike_data = self.get_json_data('free_bike_status')
+        self.last_updated = time.time()
 
-    def distance_calculate(x1,y1,x2,y2):
-        return math.sqrt((x2-x1)*(x2-x1)+(y2-y1)*(y2-y1))
+    def get_json_data(self, json_name):
+        api = {'Client-Identifier': 'gitcorp-hackathon2024'}
+        r = requests.get(f"https://gbfs.urbansharing.com/rowermevo.pl/{json_name}.json", headers=api)
+        return r.json()
+
+    def distance_calculate(self, x1, y1, x2, y2):
+        return math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1))
 
     def are_there_any_bikes(self, entry_count):
+        self.update_if_needed()
         bike_count = self.stations_status_data['data']['stations'][entry_count]['vehicle_types_available'][0]['count']
         bike_count += self.stations_status_data['data']['stations'][entry_count]['vehicle_types_available'][1]['count']
         if bike_count > 0:
@@ -29,27 +39,27 @@ class Mevo:
         else:
             return False
 
-    #data/stations/
-    def nearest_bike_station(self,user_position_x,user_position_y):
-
+    # data/stations/
+    def nearest_bike_station(self, user_position_x, user_position_y):
         current_lowest_distance = 1000000000000000000000000000
         current_lowest_distance_station_id = 0
         entry_count = -1
         for entry in self.stations_information_data['data']['stations']:
             entry_count += 1
             station_id = entry['station_id']
-            #check if there are any bikes
+            # check if there are any bikes
             if self.are_there_any_bikes(entry_count) == False:
                 continue
+
             stations_x = entry['lat']
             stations_y = entry['lon']
+            # TODO: TUTAJ GOOGLE MAPS DISTANCE MATRIX
             distance = self.distance_calculate(user_position_x, user_position_y, stations_x, stations_y)
             if distance < current_lowest_distance:
                 current_lowest_distance = distance
                 current_lowest_distance_station_id = station_id
 
-        print(f"nearest station id: {current_lowest_distance_station_id}, entry: {entry_count}, distance: {current_lowest_distance}")
-
+        return {"id": current_lowest_distance_station_id, "entry": entry_count, "distance": current_lowest_distance }
 
     def nearest_free_bike(self, user_position_x, user_position_y):
         current_lowest_distance_ebike = 1000000000000000000000000000
@@ -64,6 +74,7 @@ class Mevo:
             free_bike_id = entry['bike_id']
             free_bike_x = entry['lat']
             free_bike_y = entry['lon']
+            # TODO: TUTAJ GOOGLE MAPS DISTANCE MATRIX
             distance = self.distance_calculate(user_position_x, user_position_y, free_bike_x, free_bike_y)
             if entry['vehicle_type_id'] == 'ebike':
                 if distance < current_lowest_distance_ebike:
@@ -76,6 +87,13 @@ class Mevo:
                     current_lowest_distance_free_bike_id = free_bike_id
                     current_lowest_distance_bike_entry = entry_count
 
-
-        print(f"nearest ebike: {current_lowest_distance_free_ebike_id}, distance: {current_lowest_distance_ebike}, entry: {current_lowest_distance_ebike_entry}")
-        print(f"nearest bike: {current_lowest_distance_free_bike_id}, distance: {current_lowest_distance_bike}, entry: {current_lowest_distance_bike_entry}")
+        return {
+            "nearest_bike": {
+                "id": current_lowest_distance_free_bike_id,
+                "distance": current_lowest_distance_bike,
+                "entry": current_lowest_distance_bike_entry},
+            "nearest_ebike": {
+                "id": current_lowest_distance_free_ebike_id,
+                "distance": current_lowest_distance_ebike,
+                "entry": current_lowest_distance_ebike_entry}
+            }
