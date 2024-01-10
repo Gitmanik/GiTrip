@@ -16,3 +16,12 @@ class GoogleMapsProvider:
 }});
 </script>
 '''
+
+    def get_bike_distance(self, start, target):
+        return self._get_distance_common(start, target, "bicycling")
+    def get_walk_distance(self, start, target):
+        return self._get_distance_common(start, target, "walking")
+
+    def _get_distance_common(self, start, target, type):
+        resp = self.client.distance_matrix(start, target, mode=type, language="pl-PL")
+        return resp
