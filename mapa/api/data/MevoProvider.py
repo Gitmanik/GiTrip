@@ -116,3 +116,41 @@ class MevoProvider:
             })
 
         return to_ret
+
+    def bikes_in_radius(self, x, y, radius):
+        dictionary = {}
+        bikes_in_radius_count = 0
+        for entry in self.free_bike_data['data']['bikes']:
+            free_bike_x = entry['lat']
+            free_bike_y = entry['lon']
+            distance = self.distance_calculate(x, y, free_bike_x, free_bike_y)
+            if distance <= radius:
+                dictionary[bikes_in_radius_count] = {
+                    'lat': entry['lat'],
+                    'lon': entry['lon'],
+                    'vehicle': entry['vehicle_type_id'],
+                    'range': entry['current_range_meters']
+                }
+                bikes_in_radius_count += 1
+        return dictionary
+
+    def stations_in_radius(self, x, y, radius):
+        dictionary = {}
+        stations_in_radius_count = 0
+        entry_count = -1
+        for entry in self.stations_information_data['data']['stations']:
+            entry_count += 1
+            stations_x = entry['lat']
+            stations_y = entry['lon']
+            distance = self.distance_calculate(x, y, stations_x, stations_y)
+            if distance <= radius:
+                dictionary[stations_in_radius_count] = {
+                    'lat': entry['lat'],
+                    'lon': entry['lon'],
+                    'bike_count': self.stations_status_data['data']['stations'][entry_count]['vehicle_types_available'][0]['count'],
+                    'ebike_count': self.stations_status_data['data']['stations'][entry_count]['vehicle_types_available'][1]['count']
+                }
+                stations_in_radius_count += 1
+        return dictionary
+
+
