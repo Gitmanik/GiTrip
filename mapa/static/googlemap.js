@@ -1,10 +1,26 @@
-async function initMap() {
-const { Map } = await google.maps.importLibrary("maps");
-var mapa = document.getElementById('map');
-var map = new Map(mapa, {
-  center: {lat: -34.397, lng: 150.644},
-  zoom: 15
-});
+async function initMap(coords)
+{
+    const { Map } = await google.maps.importLibrary("maps");
+    var mapa = document.getElementById('map');
+    let map = new Map(mapa, {
+      center: coords,
+      zoom: 15,
+      disableDefaultUI: true,
+    });
+    return map;
 }
 
-initMap();
+var gdanskCoords = {lat: 54.37, lng: 18.63 }
+
+window.addEventListener('load', async function()
+{
+    var map = await initMap(gdanskCoords);
+
+    // TO MUSI BYC OSTATNIE OK?
+    if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition((position) => {
+          map.setCenter({lat: position.coords.latitude, lng: position.coords.longitude});
+        });
+    }
+
+})
