@@ -17,45 +17,33 @@ background-color: #DED473;
 border-radius: 15px;
 }
 
-#poczatek {
-text-align: center;
-height: 10vh;
-padding-top: 5%;
+#divnastartcel {
+margin: 10% 6%;
+background-color:black;
 }
-
-#cel {
-margin-top: 1%;
-font-size: 200%;
-text-align: center;
-height: 15%;
+#meta {
+margin-top:5%;
 }
-
 .pytanie {
 padding:4%;
 font-size: 2.0vw;
-width: 80%;
-height: 350%;
-min-height: 5vh;
-max-height: 5px;
+width: 87%;
+height: 15%;
+min-height: 30px;
 text-align: center;
 border-radius:15px;
 border-color: #C8E8ED;
 border-width:0.7vw;
 }
 
-#trasa {
+#divnaszybkowolno {
 text-align: center;
-}
-
-.rodzajtrasy {
-margin-top:3%;
-align: center;
 }
 .trasa1, .trasa2 {
 float: left;
-text_align: center;
-width: 3vw;
-font-size: 3vw;
+text-align: center;
+width: 30%;
+font-size: 1.5vw;
 padding-top:10%;
 padding-bottom: 10%;
 border-radius:20px;
@@ -63,11 +51,17 @@ border-radius:20px;
 .trasa1 {
 margin-left: 7.5%;
 }
-
-.wybor, .pojazd{
-font-size: 2vw;
+.wybor{
+font-size: 1.8vw;
 float:left;
-align: center;
+padding: 0 5% 0 5%;
+}
+
+
+
+.pojazd{
+font-size: 40%;
+float:left;
 padding: 2% 5% 0 5%;
 }
 

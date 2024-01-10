@@ -15,17 +15,11 @@
 
 		<div id="wyszuk">
 
-		<div id="poczatek">
-			<form>
-				<input name="start" class="pytanie" placeholder="Skąd przybywasz?" onkeyup="sendRequest()">
-			</form>
-		</div>
-		<div id="cel">
-			<form>
-				<input name="meta" class="pytanie" placeholder="Dokąd zmierzasz?" onkeyup="sendRequestM()">
-			</form>
-		</div>
-			<div id="trasa">
+			<div id="divnastartcel">
+				<input id="start" class="pytanie" placeholder="Skąd przybywasz?" onkeyup="sendRequest()">
+				<input id="meta" class="pytanie" placeholder="Dokąd zmierzasz?" onkeyup="sendRequestM()">
+			</div>
+			<div id="divnaszybkowolno">
 				<form class="rodzajtrasy">
 				<input class="trasa1" type="submit" name="opcja_trasy" value="SZYBSZA">
 					<p class="wybor">Wybierz</br>trasę</p>
