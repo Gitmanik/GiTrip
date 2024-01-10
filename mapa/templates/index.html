@@ -12,7 +12,9 @@
 	</head>
 <body>
 	<div id="container">
+
 		<div id="wyszuk">
+
 		<div id="poczatek">
 			<form>
 				<input name="start" class="pytanie" placeholder="Skąd przybywasz?" onkeyup="sendRequest()">
@@ -25,11 +27,16 @@
 		</div>
 			<div id="trasa">
 				<form class="rodzajtrasy">
-				<input class="trasa1" type="submit" name="opcja_trasy" value="szybsza">
+				<input class="trasa1" type="submit" name="opcja_trasy" value="SZYBSZA">
 					<p class="wybor">Wybierz</br>trasę</p>
-				<input class="trasa2" type="submit" name="opcja_trasy" value="tańsza">
+				<input class="trasa2" type="submit" name="opcja_trasy" value="TAŃSZA">
 				</form>
 			</div>
+			<div class="pojazd">
+				<img src="static/gitrower.jpg">
+				<img src="static/scooter.jpg">
+			</div>
+
 		</div>
 		<div id="map"></div>
 	</div>
