@@ -6,11 +6,10 @@ import time
 class MevoProvider:
 
     def __init__(self):
-        self.last_updated = None
+        self.last_updated = 0
         self.free_bike_data = None
         self.stations_status_data = None
         self.stations_information_data = None
-        self.update_data()
 
     def update_if_needed(self):
         if time.time() - self.last_updated > 30:
@@ -97,3 +96,23 @@ class MevoProvider:
                 "distance": current_lowest_distance_ebike,
                 "entry": current_lowest_distance_ebike_entry}
             }
+
+    def get_all_bikes(self):
+
+        self.update_if_needed()
+        to_ret = list()
+
+        for entry in self.stations_information_data['data']['stations']:
+            to_ret.append
+
+        for entry in self.free_bike_data['data']['bikes']:
+
+
+            to_ret.append( {
+                "bike_id": entry['bike_id'],
+                "type": entry['vehicle_type_id'],
+            "lat": entry['lat'],
+            "lon": entry['lon']
+            })
+
+        return to_ret
