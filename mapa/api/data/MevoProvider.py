@@ -102,8 +102,8 @@ class MevoProvider:
         self.update_if_needed()
         to_ret = list()
 
-        for entry in self.stations_information_data['data']['stations']:
-            to_ret.append
+        #for entry in self.stations_information_data['data']['stations']:
+            #to_ret.append
 
         for entry in self.free_bike_data['data']['bikes']:
 
@@ -111,8 +111,8 @@ class MevoProvider:
             to_ret.append( {
                 "bike_id": entry['bike_id'],
                 "type": entry['vehicle_type_id'],
-            "lat": entry['lat'],
-            "lon": entry['lon']
+                "lat": entry['lat'],
+                "lng": entry['lon']
             })
 
         return to_ret

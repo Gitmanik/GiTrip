@@ -20,8 +20,6 @@ window.addEventListener('load', async function()
 {
     map = await initMap(gdanskCoords);
 
-    input: inputValue, lat: map.getCenter().lat(), lng: map.getCenter().lng()
-
     map.addListener('click', function(event) {
         placeMarker(event.latLng);
     });
@@ -32,25 +30,31 @@ window.addEventListener('load', async function()
           map.setCenter({lat: position.coords.latitude, lng: position.coords.longitude});
         });
     }
-
+    await markAllBikes();
     loadroad();
 
-})
+});
 
-function getBikes()
+async function markAllBikes()
 {
-    fetch('/allbikes', {
+    var bikes = await getBikes();
+    bikes.forEach( (el) =>
+    {
+        markBike({lat: el.lat, lng: el.lng});
+    });
+}
+
+async function getBikes()
+{
+    var response = await fetch('/allbikes', {
       method: 'GET',
-    }).then(response => {
-      if(response.ok){
-          return response.json();
-      }
-        throw new Error('Request failed!');
-    }, networkError => {
-      console.log(networkError.message);
-    }).then(jsonResponse => {
-      console.log(jsonResponse);
-      return null;
+    });
+    if(response.ok){
+        return await response.json();
+    } else
+    {
+        return null;
+    }
 }
 
 function loadroad()
@@ -80,7 +84,7 @@ function loadroad()
 
     flightPath.setMap(map);
 
-    })
+    });
 
 
 }
@@ -88,7 +92,7 @@ function loadroad()
 function markBike(location) {
     var marker = new google.maps.Marker({
         position: location,
-        icon: '/static/bike.jpg'
+        icon: '/static/rsz_mevo.png',
         map: map
     });
 }
