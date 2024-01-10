@@ -7,18 +7,20 @@
 		<link rel="stylesheet" href="static/index.css" type="text/css"/>
 		{{gmaps|safe}}
 		<script src="static/googlemap.js" type="text/javascript"> </script>
+		<script src="static/index.js" type="text/javascript"> </script>
+		<script src="https://code.jquery.com/jquery-3.7.1.min.js" type="text/javascript"> </script>
 	</head>
 <body>
 	<div id="container">
 		<div id="wyszuk">
 		<div id="poczatek">
 			<form>
-				<input name="start" class="pytanie" placeholder="Skąd przybywasz?">
+				<input name="start" class="pytanie" placeholder="Skąd przybywasz?" onkeyup="sendRequest()">
 			</form>
 		</div>
 		<div id="cel">
 			<form>
-				<input name="meta" class="pytanie" placeholder="Dokąd zmierzasz?">
+				<input name="meta" class="pytanie" placeholder="Dokąd zmierzasz?" onkeyup="sendRequestM()">
 			</form>
 		</div>
 		</div>
