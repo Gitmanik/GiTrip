@@ -12,3 +12,4 @@ class TierProvider:
         r = requests.get(f"https://platform.tier-services.io/v1/vehicle?lat={lat}&lng={lng}&radius={radius}", headers = api)
 
         return r.json()
+
