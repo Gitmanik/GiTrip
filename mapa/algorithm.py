@@ -1,7 +1,19 @@
-def algorytm(lista_gitmana):
+def algorytm(uuu):
     from main import mevo
     from main import gmaps
     from main import tier
+    import re
+
+    lista_gitmana = []
+
+    for i in uuu:
+        match = re.search(r"\((.*), (.*)\)", i)
+        if match:
+            tuple_res = (float(match.group(1)), float(match.group(2)))
+            lista_gitmana.append(tuple_res)
+        else:
+            lista_gitmana.append(i)
+
     lista_do_oddania = []
     start = []
     end_point = []
