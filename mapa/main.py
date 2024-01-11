@@ -13,12 +13,14 @@ gmaps = api.maps.GoogleMapsProvider.GoogleMapsProvider(os.getenv('gmaps_key'))
 mevo = api.data.MevoProvider.MevoProvider()
 tier = api.data.TierProvider.TierProvider()
 
-app = Flask(__name__)
-
 base_url = ''
 
 if os.getenv('app_root'):
     base_url = os.getenv('app_root')
+
+print(f"Running GiTrip with base url: '{base_url}'")
+
+app = Flask(__name__)
 
 @app.route(base_url + "/")
 def hello_world():
