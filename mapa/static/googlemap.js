@@ -24,7 +24,7 @@ async function markAllBikeParking()
 function markBike(location) {
     var marker = new google.maps.Marker({
         position: location,
-        icon: '/static/rsz_mevo.png',
+        icon: base_url + '/static/rsz_mevo.png',
         map: map
     });
 }
