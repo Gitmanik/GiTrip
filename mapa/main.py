@@ -13,20 +13,13 @@ gmaps = api.maps.GoogleMapsProvider.GoogleMapsProvider(os.getenv('gmaps_key'))
 mevo = api.data.MevoProvider.MevoProvider()
 tier = api.data.TierProvider.TierProvider()
 
-base_url = ''
-
-if os.getenv('app_root'):
-    base_url = os.getenv('app_root')
-
-print(f"Running GiTrip with base url: '{base_url}'")
-
 app = Flask(__name__)
 
-@app.route(base_url + "/")
+@app.route("/")
 def hello_world():
     return render_template('index.html', gmaps=gmaps.get_map())
 
-@app.route(base_url + "/api/autocomplete", methods=["POST"])
+@app.route("/api/autocomplete", methods=["POST"])
 def api_autocomplete():
     try:
         data = json.loads(request.data)
@@ -37,15 +30,15 @@ def api_autocomplete():
         error_message = f'Error processing request: {str(e)}, {traceback.format_exc()}'
         return jsonify({'error': error_message}), 500
 
-@app.route(base_url + "/api/allbikes")
+@app.route("/api/allbikes")
 def api_allbikes():
     return mevo.get_all_bikes()
 
-@app.route(base_url + "/api/allbikeparkings")
+@app.route("/api/allbikeparkings")
 def api_allbikeparkings():
     return mevo.get_all_bike_parkings()
 
-@app.route(base_url + "/api/get_path", methods=["POST"])
+@app.route("/api/get_path", methods=["POST"])
 def api_getpath():
     try:
         data = json.loads(request.data)
