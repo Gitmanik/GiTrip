@@ -3,6 +3,9 @@ from flask import Flask, render_template, request, jsonify
 import api.maps.GoogleMapsProvider
 import api.data.TierProvider
 import api.data.MevoProvider
+import json
+import algorithm
+import traceback
 
 gmaps = api.maps.GoogleMapsProvider.GoogleMapsProvider('AIzaSyDsP9RqZORUaJlsX3f1zGJqDJccBNXez4o')
 
@@ -15,25 +18,43 @@ app = Flask(__name__)
 def hello_world():
     return render_template('index.html', gmaps=gmaps.get_map())
 
-@app.route("/nasze-api", methods=["POST"])
-def nasze_api():
+@app.route("/api/autocomplete", methods=["POST"])
+def api_autocomplete():
     try:
-        input_value = request.form.get('input')
-        location = (request.form.get('lat'), request.form.get('lng'))
-        # response_data = {'message': 'Request received successfully', 'input': input_value}
+        data = json.loads(request.data)
+        input_value = data['input']
+        location = (data['lat'], data['lng'])
         return jsonify(gmaps.autocomplete(input_value, location)), 200
     except Exception as e:
-        error_message = f'Error processing request: {str(e)}'
+        error_message = f'Error processing request: {str(e)}, {traceback.format_exc()}'
         return jsonify({'error': error_message}), 500
 
-@app.route("/allbikes")
-def get_all_bikes():
+@app.route("/api/allbikes")
+def api_allbikes():
     return mevo.get_all_bikes()
-    return
+
+@app.route("/api/allbikeparkings")
+def api_allbikeparkings():
+    return mevo.get_all_bike_parkings()
+
+@app.route("/api/get_path", methods=["POST"])
+def api_getpath():
+    try:
+        data = json.loads(request.data)
+        print(data)
+        return jsonify(algorithm.algorytm(data)), 200
+    except Exception as e:
+        error_message = f'Error processing request: {str(e)}, {traceback.format_exc()}'
+        print(traceback.format_exc())
+        return jsonify({'error': error_message}), 500
 
 @app.route("/tiertest")
 def tier_test():
     return tier.get_scooters_data(54.372158, 18.638306, 1000)
+
+@app.route("/tierzones")
+def tier_zones():
+    return tier.get_zones()
 
 @app.route("/routetest")
 def route_test():
