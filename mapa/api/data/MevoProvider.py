@@ -26,8 +26,24 @@ class MevoProvider:
         r = requests.get(f"https://gbfs.urbansharing.com/rowermevo.pl/{json_name}.json", headers=api)
         return r.json()
 
-    def distance_calculate(self, x1, y1, x2, y2):
-        return math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1))
+
+    def distance_calculate(self, lat1, lon1, lat2, lon2):
+        R = 6371  # promień Ziemi w kilometrach
+
+        # konwersja stopni na radiany
+        lat1, lon1, lat2, lon2 = map(math.radians, [lat1, lon1, lat2, lon2])
+
+        # różnice szerokości i długości geograficznych
+        dlat = lat2 - lat1
+        dlon = lon2 - lon1
+
+        # obliczenie wzoru haversine
+        a = math.sin(dlat / 2) ** 2 + math.cos(lat1) * math.cos(lat2) * math.sin(dlon / 2) ** 2
+        c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
+        distance = R * c
+        distance *= 1000
+
+        return distance
 
     def are_there_any_bikes(self, entry_count):
         self.update_if_needed()
@@ -43,6 +59,8 @@ class MevoProvider:
         current_lowest_distance = 1000000000000000000000000000
         current_lowest_distance_station_id = 0
         entry_count = -1
+        best_station_x = 0
+        best_station_y = 0
         for entry in self.stations_information_data['data']['stations']:
             entry_count += 1
             station_id = entry['station_id']
@@ -57,8 +75,11 @@ class MevoProvider:
             if distance < current_lowest_distance:
                 current_lowest_distance = distance
                 current_lowest_distance_station_id = station_id
+                best_station_x = stations_x
+                best_station_y = stations_y
 
-        return {"id": current_lowest_distance_station_id, "entry": entry_count, "distance": current_lowest_distance }
+        #return {"id": current_lowest_distance_station_id, "entry": entry_count, "distance": current_lowest_distance }
+        return {'lat': best_station_x, 'lon': best_station_y}
 
     def nearest_free_bike(self, user_position_x, user_position_y):
         current_lowest_distance_ebike = 1000000000000000000000000000
@@ -130,3 +151,41 @@ class MevoProvider:
             })
 
         return to_ret
+
+    def bikes_in_radius(self, x, y, radius):
+        dictionary = list()
+        bikes_in_radius_count = 0
+        for entry in self.free_bike_data['data']['bikes']:
+            free_bike_x = entry['lat']
+            free_bike_y = entry['lon']
+            distance = self.distance_calculate(x, y, free_bike_x, free_bike_y)
+            if distance <= radius:
+                dictionary.append({
+                    'lat': entry['lat'],
+                    'lon': entry['lon'],
+                    'vehicle': entry['vehicle_type_id'],
+                    'range': entry['current_range_meters'],
+                    'id': entry['bike_id']
+                })
+                bikes_in_radius_count += 1
+        return dictionary
+
+    def stations_in_radius(self, x, y, radius):
+        dictionary = list()
+        stations_in_radius_count = 0
+        entry_count = -1
+        for entry in self.stations_information_data['data']['stations']:
+            entry_count += 1
+            stations_x = entry['lat']
+            stations_y = entry['lon']
+            distance = self.distance_calculate(x, y, stations_x, stations_y)
+            if distance <= radius:
+                dictionary.append ({
+                    'id': entry['station_id'],
+                    'lat': entry['lat'],
+                    'lon': entry['lon'],
+                    'bike_count': self.stations_status_data['data']['stations'][entry_count]['vehicle_types_available'][0]['count'],
+                    'ebike_count': self.stations_status_data['data']['stations'][entry_count]['vehicle_types_available'][1]['count']
+                })
+                stations_in_radius_count += 1
+        return dictionary

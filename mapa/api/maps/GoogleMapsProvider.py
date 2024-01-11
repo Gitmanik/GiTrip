@@ -16,7 +16,7 @@ class GoogleMapsProvider:
 }});
 </script>
 '''
-
+#get_bike_distance()
     def get_bike_distance(self, start, target):
         return self._get_distance_common(start, target, "bicycling")
     def get_walk_distance(self, start, target):
@@ -34,6 +34,14 @@ class GoogleMapsProvider:
 
         return to_ret
 
+    ##def
+    def geocode(self, string):
+        results = self.client.geocode(string)
+        return {
+            'lat': results[0]['geometry']['location']['lat'],
+            'lon': results[0]['geometry']['location']['lng']
+        }
+        
     def get_bike_direction(self, start, target):
         return self._get_directions_common(start, target, "bicycling")
     def get_walk_direction(self, start, target):
