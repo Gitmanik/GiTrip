@@ -1,86 +1,93 @@
-html, body, #container, #map {
-width:100%;
-height:100%;
-margin:0;
-padding:0;
+html, body, .container, #map {
+    width:100%;
+    height:100%;
+    margin:0;
+    padding:0;
 }
 
-.pytanie {
-padding:4%;
-font-size: 6vh;
-width: 80%;
-height: 35%;
-text-align: center;
-border-radius:15px;
-border-color: #C8E8ED;
-border-width:10px;
+.box {
+    position: absolute;
+    z-index:1;
+    margin-left: 2%;
+    margin-top: 2%;
+    width: 20%;
+    background-color: rgb(213, 240, 193, 0.6);
+    border-radius: 15px;
+    padding:2%;
 }
 
-#wyszuk {
-position: absolute;
-z-index:1;
-height: 90%;
-margin-left: 2%;
-margin-top: 2%;
-width: 30%;
-background-color: lightblue;
-border-radius: 15px;
+.inputContainer {
+  height:100%;
+  width:100%;
+  text-align:center;
 }
 
-#poczatek {
-height: 15%;
-text-align: center;
-padding-top: 5%;
+.stop {
+    text-align: center;
+    height:50px;
+    min-height:50px;
+    width:100%;
+    padding-top:5%;
+    padding-bottom:5%;
 }
 
-#cel {
-margin-top: 1%;
-text-align: center;
-height: 15%;
-<!--padding: 0.5%;-->
+.stop input {
+    padding:0;
 }
 
-#trasa {
-text-align: center;
+.boxInput {
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    border:0;
+    display: block;
+    margin: 0 auto;
 }
 
-.rodzajtrasy {
-margin-top:3%;
-align: center;
+.boxButton {
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    border:0;
+    display: block;
+    margin: 0 auto;
 }
-
-.wybor{
-font-size: 3vh;
-float:left;
-align: center;
-padding: 2% 5% 0 5%;
-}
-.trasa1, .trasa2 {
-float: left;
-text_align: center;
-width: 30%;
-font-size: 4vh;
-padding-top:10%;
-padding-bottom: 10%;
-border-radius:20px;
-}
-.trasa1 {
-margin-left: 7.5%;
-}
-
-
 
 @media only screen and (max-width: 900px) {
-   nav {width:95%; position:relative; height:auto; font-size: 98%}
-	#content {
-		width: 98%;
-		position:relative;
-		height: auto;
-	}
-	#zas {
-		width: 98%;
-		position: relative;
-		height: auto;
-	}
-   textarea{width: 70%;}
+    .box {
+        position: absolute;
+        margin:0;
+        z-index:1;
+        height: 20%;
+        width: 100%;
+        background-color: lightblue;
+        padding-left:0%;
+        padding-right:0%;
+        border-radius:0;
+    }
+}
+
+
+ul {
+  list-style: none;
+  padding:0;
+}
+
+li:last {
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.list {
+  position: relative;
+  z-index:2;
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 0 0 5px 5px;
+}
+.list-items {
+  padding: 10px 5px;
+}
+.list-items:hover {
+  background-color: #dddddd;
 }

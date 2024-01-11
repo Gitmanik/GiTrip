@@ -2,9 +2,9 @@ async function initMap(coords)
 {
     const { Map } = await google.maps.importLibrary("maps");
     const { Geometry } = await google.maps.importLibrary("geometry");
-
-    var mapa = document.getElementById('map');
-    let map = new Map(mapa, {
+    const { Geocoding } = await google.maps.importLibrary("geocoding");
+    geocoder = new google.maps.Geocoder();
+    let map = new Map(document.getElementById('map'), {
       center: coords,
       zoom: 15,
       disableDefaultUI: true,
@@ -12,81 +12,13 @@ async function initMap(coords)
     return map;
 }
 
-var gdanskCoords = {lat: 54.354687, lng: 18.593562 }
-
-var map;
-
-window.addEventListener('load', async function()
+async function markAllBikeParking()
 {
-    map = await initMap(gdanskCoords);
-
-    map.addListener('click', function(event) {
-        placeMarker(event.latLng);
-    });
-
-    // TO MUSI BYC OSTATNIE OK?
-    if ("geolocation" in navigator) {
-        navigator.geolocation.getCurrentPosition((position) => {
-          map.setCenter({lat: position.coords.latitude, lng: position.coords.longitude});
-        });
-    }
-    await markAllBikes();
-    loadroad();
-
-});
-
-async function markAllBikes()
-{
-    var bikes = await getBikes();
+    var bikes = await getBikeParkings();
     bikes.forEach( (el) =>
     {
         markBike({lat: el.lat, lng: el.lng});
     });
-}
-
-async function getBikes()
-{
-    var response = await fetch('/allbikes', {
-      method: 'GET',
-    });
-    if(response.ok){
-        return await response.json();
-    } else
-    {
-        return null;
-    }
-}
-
-function loadroad()
-{
-    fetch('/test', {
-      method: 'GET',
-    }).then(response => {
-      if(response.ok){
-          return response.json();
-      }
-        throw new Error('Request failed!');
-    }, networkError => {
-      console.log(networkError.message);
-    }).then(jsonResponse => {
-      console.log(jsonResponse);
-
-    var p = google.maps.geometry.encoding.decodePath(jsonResponse['polyline']);
-
-
-    const flightPath = new google.maps.Polyline({
-    path: p,
-    geodesic: true,
-    strokeColor: "#FF0000",
-    strokeOpacity: 1.0,
-    strokeWeight: 2,
-  });
-
-    flightPath.setMap(map);
-
-    });
-
-
 }
 
 function markBike(location) {
@@ -98,8 +30,51 @@ function markBike(location) {
 }
 
 function placeMarker(location) {
-    var marker = new google.maps.Marker({
+    return marker = new google.maps.Marker({
         position: location,
         map: map
+    });
+}
+
+path = [];
+
+function drawPath(p)
+{
+    console.log(p);
+    path.forEach((e) => {
+        e.setMap(null);
+    });
+    path = [];
+    p.forEach((e) => {
+
+    console.log(e);
+    var line = google.maps.geometry.encoding.decodePath(e.path.polyline);
+
+    color = "";
+
+    switch (e.type){
+
+        case "walk":
+            color = "#FF0000";
+            break;
+        case 'mevo':
+            color = "#00FF00";
+            break;
+        case 'tier':
+            color = "#0000FF";
+            break;
+
+    }
+
+    const marker = new google.maps.Polyline({
+    path: line,
+    geodesic: true,
+    strokeColor: color,
+    strokeOpacity: 1.0,
+    strokeWeight: 2,
+  });
+
+    marker.setMap(map);
+    path.push(marker);
     });
 }

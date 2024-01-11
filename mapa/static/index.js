@@ -1,31 +1,22 @@
-function sendRequest() {
-    var inputValue = $("[name=start]").val();
+var gdanskCoords = {lat: 54.354687, lng: 18.593562 }
 
-    $.ajax({
-        type: 'POST',
-        url: '/nasze-api',
-        data: { input: inputValue, lat: map.getCenter().lat(), lng: map.getCenter().lng() },
-        success: function(response) {
-            console.log(response);
-        },
-        error: function(error) {
-            console.error('Error', error);
+var geocoder;
+var map;
+
+window.addEventListener('load', async function()
+{
+    map = await initMap(gdanskCoords);
+
+    map.addListener('click', mapClicked);
+
+    if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition((position) => {
+              map.setCenter({lat: position.coords.latitude, lng: position.coords.longitude});
+            });
         }
-    });
-}
 
-function sendRequestM() {
-    var inputValue = $("[name=meta]").val();
+    addStop();
+    addStop();
 
-    $.ajax({
-        type: 'POST',
-        url: '/nasze-api',
-        data: { input: inputValue, lat: map.getCenter().lat(), lng: map.getCenter().lng() },
-        success: function(response) {
-            console.log(response);
-        },
-        error: function(error) {
-            console.error('Error', error);
-        }
-    });
-}
+    await markAllBikeParking();
+});

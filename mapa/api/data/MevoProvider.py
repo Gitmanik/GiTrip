@@ -138,6 +138,20 @@ class MevoProvider:
 
         return to_ret
 
+    def get_all_bike_parkings(self):
+
+        self.update_if_needed()
+        to_ret = list()
+
+        for entry in self.stations_information_data['data']['stations']:
+            to_ret.append({
+                "station_id": entry['station_id'],
+                "lat": entry['lat'],
+                "lng": entry['lon']
+            })
+
+        return to_ret
+
     def bikes_in_radius(self, x, y, radius):
         dictionary = list()
         bikes_in_radius_count = 0
@@ -175,5 +189,3 @@ class MevoProvider:
                 })
                 stations_in_radius_count += 1
         return dictionary
-
-
