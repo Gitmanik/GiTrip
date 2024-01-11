@@ -157,7 +157,7 @@ class MevoProvider:
         return dictionary
 
     def stations_in_radius(self, x, y, radius):
-        dictionary = {}
+        dictionary = list()
         stations_in_radius_count = 0
         entry_count = -1
         for entry in self.stations_information_data['data']['stations']:
@@ -166,12 +166,13 @@ class MevoProvider:
             stations_y = entry['lon']
             distance = self.distance_calculate(x, y, stations_x, stations_y)
             if distance <= radius:
-                dictionary[stations_in_radius_count] = {
+                dictionary.append ({
+                    'id': entry['station_id'],
                     'lat': entry['lat'],
                     'lon': entry['lon'],
                     'bike_count': self.stations_status_data['data']['stations'][entry_count]['vehicle_types_available'][0]['count'],
                     'ebike_count': self.stations_status_data['data']['stations'][entry_count]['vehicle_types_available'][1]['count']
-                }
+                })
                 stations_in_radius_count += 1
         return dictionary
 
