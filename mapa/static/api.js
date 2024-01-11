@@ -1,6 +1,6 @@
 async function autocompleteRequest(inputValue) {
 
-    var response = await fetch('/api/autocomplete', {
+    var response = await fetch(base_url + '/api/autocomplete', {
       method: 'POST',
       body: JSON.stringify({ input: inputValue, lat: map.getCenter().lat(), lng: map.getCenter().lng() })
     });
@@ -16,7 +16,7 @@ async function autocompleteRequest(inputValue) {
 
 async function getBikes()
 {
-    var response = await fetch('/api/allbikes', {
+    var response = await fetch(base_url + '/api/allbikes', {
       method: 'GET',
     });
     if(response.ok){
@@ -29,7 +29,7 @@ async function getBikes()
 
 async function getBikeParkings()
 {
-    var response = await fetch('/api/allbikeparkings', {
+    var response = await fetch(base_url + '/api/allbikeparkings', {
       method: 'GET',
     });
     if(response.ok){

@@ -188,7 +188,7 @@ function checkAllFilled() {
 
 function requestPath(list)
 {
-    fetch("/api/get_path", {
+    fetch(base_url + "/api/get_path", {
     method: "POST",
     body: JSON.stringify(list)
     }).then(response => {
