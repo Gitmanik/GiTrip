@@ -190,5 +190,5 @@ function requestPath(list)
       console.log(networkError.message);
     }).then(jsonResponse => {
         drawPath(jsonResponse);
-    }
+    });
 }

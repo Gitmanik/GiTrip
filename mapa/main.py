@@ -4,6 +4,8 @@ import api.maps.GoogleMapsProvider
 import api.data.TierProvider
 import api.data.MevoProvider
 import json
+import algorithm
+import traceback
 
 gmaps = api.maps.GoogleMapsProvider.GoogleMapsProvider('AIzaSyDsP9RqZORUaJlsX3f1zGJqDJccBNXez4o')
 
@@ -24,7 +26,7 @@ def api_autocomplete():
         location = (data['lat'], data['lng'])
         return jsonify(gmaps.autocomplete(input_value, location)), 200
     except Exception as e:
-        error_message = f'Error processing request: {str(e)}'
+        error_message = f'Error processing request: {str(e)}, {traceback.format_exc()}'
         return jsonify({'error': error_message}), 500
 
 @app.route("/api/allbikes")
@@ -34,6 +36,17 @@ def api_allbikes():
 @app.route("/api/allbikeparkings")
 def api_allbikeparkings():
     return mevo.get_all_bike_parkings()
+
+@app.route("/api/get_path", methods=["POST"])
+def api_getpath():
+    try:
+        data = json.loads(request.data)
+        print(data)
+        return jsonify(algorithm.algorytm(data)), 200
+    except Exception as e:
+        error_message = f'Error processing request: {str(e)}, {traceback.format_exc()}'
+        print(traceback.format_exc())
+        return jsonify({'error': error_message}), 500
 
 @app.route("/tiertest")
 def tier_test():

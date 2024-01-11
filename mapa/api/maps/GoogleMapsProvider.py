@@ -26,15 +26,13 @@ class GoogleMapsProvider:
         resp = self.client.distance_matrix(start, target, mode=type, language="pl-PL")
 
         resp = resp['rows'][0]['elements']
-
         to_ret = list()
         for row in resp:
             to_ret.append({"distance": row['distance']['value'],
-                            "duration": resp['duration']['value']})
+                            "duration": row['duration']['value']})
 
         return to_ret
 
-    ##def
     def geocode(self, string):
         results = self.client.geocode(string)
         return {
@@ -51,7 +49,6 @@ class GoogleMapsProvider:
         resp = self.client.directions(start, target, mode=type, language="pl-PL")
 
         resp = resp[0]
-
         return {"distance": resp['legs'][0]['distance']['value'],
                 "duration": resp['legs'][0]['duration']['value'],
                 "polyline": resp['overview_polyline']['points']}
@@ -77,5 +74,3 @@ class GoogleMapsProvider:
         except Exception as e:
             print(e)
             return None
-
-        return to_ret
