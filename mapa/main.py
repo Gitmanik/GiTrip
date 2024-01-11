@@ -14,6 +14,8 @@ mevo = api.data.MevoProvider.MevoProvider()
 tier = api.data.TierProvider.TierProvider()
 
 app = Flask(__name__)
+if os.getenv('app_root'):
+    app.config["APPLICATION_ROOT"] = os.getenv('app_root')
 
 @app.route("/")
 def hello_world():
