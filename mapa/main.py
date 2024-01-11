@@ -6,8 +6,9 @@ import api.data.MevoProvider
 import json
 import algorithm
 import traceback
+import os
 
-gmaps = api.maps.GoogleMapsProvider.GoogleMapsProvider('AIzaSyDsP9RqZORUaJlsX3f1zGJqDJccBNXez4o')
+gmaps = api.maps.GoogleMapsProvider.GoogleMapsProvider(os.getenv('gmaps_key'))
 
 mevo = api.data.MevoProvider.MevoProvider()
 tier = api.data.TierProvider.TierProvider()
