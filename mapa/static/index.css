@@ -16,6 +16,19 @@ html, body, .container, #map {
     padding:2%;
 }
 
+.pods {
+    text-align: center;
+    position: absolute;
+    left:89%;
+    z-index:1;
+    margin-right: 2%;
+    margin-top: 2%;
+    width: 5%;
+    background-color: rgb(213, 240, 193, 0.6);
+    border-radius: 15px;
+    padding:2%;
+}
+
 .inputContainer {
   height:100%;
   width:100%;

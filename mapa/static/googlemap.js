@@ -45,9 +45,17 @@ function drawPath(p)
         e.setMap(null);
     });
     path = [];
+
+    total_dist = 0;
+    total_time = 0;
+
     p.forEach((e) => {
 
     console.log(e);
+
+    total_dist += e.path.distance;
+    total_time += e.path.duration;
+
     var line = google.maps.geometry.encoding.decodePath(e.path.polyline);
 
     color = "";
@@ -77,4 +85,7 @@ function drawPath(p)
     marker.setMap(map);
     path.push(marker);
     });
+
+    document.getElementById('text').innerHTML = '<b>' + total_dist + 'm, ' + Math.floor(total_time / 60) + ' min</b>';
+
 }
