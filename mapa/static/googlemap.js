@@ -55,10 +55,10 @@ function drawPath(p)
     switch (e.type){
 
         case "walk":
-            color = "#FF0000";
+            color = "#00FF00";
             break;
         case 'mevo':
-            color = "#00FF00";
+            color = "#FF0000";
             break;
         case 'tier':
             color = "#0000FF";

@@ -65,17 +65,27 @@ async function stopOnKeyUp(e)
     let el = e.target;
     let val = el.value;
 
-    var autocomplete = await autocompleteRequest(val);
+    setTimeout(async (el, val) => {
+        console.log("Delayed for 1 second.");
+        if (el.value != val)
+        {
+            console.log("nie ma co dzwonic");
+            return;
+        }
+        console.log("mozna dzwonic");
 
-    if (autocomplete == null)
-        return;
+        var autocomplete = await autocompleteRequest(val);
 
-    let arr = [];
-    autocomplete.forEach((x) => {
-    arr.push("<b>" + x[0] + "</b></br><i>" + x[1] + "</i>")
-    });
+        if (autocomplete == null)
+            return;
 
-    populateList(el.id, el.id + "_list", arr, 'stopAutocompleteReady')
+        let arr = [];
+        autocomplete.forEach((x) => {
+        arr.push("<b>" + x[0] + "</b></br><i>" + x[1] + "</i>")
+        });
+
+        populateList(el.id, el.id + "_list", arr, 'stopAutocompleteReady');
+    }, "750", e.target, val);
 }
 
 function stopAutocompleteReady(el, va) {
