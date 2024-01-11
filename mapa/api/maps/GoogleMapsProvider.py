@@ -16,7 +16,7 @@ class GoogleMapsProvider:
 }});
 </script>
 '''
-
+#get_bike_distance()
     def get_bike_distance(self, start, target):
         return self._get_distance_common(start, target, "bicycling")
     def get_walk_distance(self, start, target):
@@ -24,7 +24,15 @@ class GoogleMapsProvider:
 
     def _get_distance_common(self, start, target, type):
         resp = self.client.distance_matrix(start, target, mode=type, language="pl-PL")
-        return resp
+        resp = resp['rows'][0]['elements']
+
+        #print(resp)
+        to_ret = list()
+        for row in resp:
+            to_ret.append({"distance": row['distance']['value'],
+                           "duration": row['duration']['value']})
+
+        return to_ret
 
     ##def
     def get_bike_direction(self, start, target):
