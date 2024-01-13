@@ -188,7 +188,7 @@ function checkAllFilled() {
 
 function requestPath(list)
 {
-    document.getElementById("loading_path_spinner").style.display='block';
+    updateSpinnerStatus(1);
     fetch(base_url + "/api/get_path", {
     method: "POST",
     body: JSON.stringify(list)
@@ -201,6 +201,14 @@ function requestPath(list)
       console.log(networkError.message);
     }).then(jsonResponse => {
         drawPath(jsonResponse);
-        document.getElementById("loading_path_spinner").style.display='none';
+        updateSpinnerStatus(-1);
     });
+}
+
+var spinner_total = 0;
+
+function updateSpinnerStatus(x = 0)
+{
+    spinner_total += x;
+    document.getElementById("loading_path_spinner").style.display = spinner_total > 0 ? 'block' : 'none';
 }
