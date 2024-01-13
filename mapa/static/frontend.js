@@ -188,6 +188,7 @@ function checkAllFilled() {
 
 function requestPath(list)
 {
+    document.getElementById("loading_path_spinner").style.display='block';
     fetch(base_url + "/api/get_path", {
     method: "POST",
     body: JSON.stringify(list)
@@ -200,5 +201,6 @@ function requestPath(list)
       console.log(networkError.message);
     }).then(jsonResponse => {
         drawPath(jsonResponse);
+        document.getElementById("loading_path_spinner").style.display='none';
     });
 }

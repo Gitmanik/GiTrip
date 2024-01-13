@@ -3,8 +3,6 @@ var gdanskCoords = {lat: 54.354687, lng: 18.593562 }
 var geocoder;
 var map;
 
-var base_url = '/gitrip';
-
 window.addEventListener('load', async function()
 {
     map = await initMap(gdanskCoords);
