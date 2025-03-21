@@ -1,5 +1,5 @@
 # Hackathon 2024 - GiTrip
-
+![Screenshot](Screenshot.png)
 ## Smart-city
 
 Projekt wykonany przez Gitcorp.
@@ -23,3 +23,7 @@ pip3 install -r requirements.txt
 ## Używane biblioteki:
 * Flask 3.0.0
 * googlemaps 4.10.0
+
+<div style="text-align:center">
+<img src="logo.png">
+</div>
