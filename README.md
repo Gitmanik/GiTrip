@@ -24,6 +24,6 @@ pip3 install -r requirements.txt
 * Flask 3.0.0
 * googlemaps 4.10.0
 
-<div style="text-align:center">
-<img src="logo.png">
-</div>
+<p align="center">
+  <img src="logo.png" alt="Logo">
+</p>
