@@ -25,5 +25,5 @@ pip3 install -r requirements.txt
 * googlemaps 4.10.0
 
 <p align="center">
-  <img src="logo.png" alt="Logo">
+  <img src="logo1.png" alt="Logo">
 </p>
